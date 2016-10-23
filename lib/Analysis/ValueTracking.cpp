@@ -1714,6 +1714,7 @@ bool isKnownToBeAPowerOfTwo(const Value *V, bool OrZero, unsigned Depth,
 /// Currently this routine does not support vector GEPs.
 static bool isGEPKnownNonNull(const GEPOperator *GEP, unsigned Depth,
                               const Query &Q) {
+	return false;
   if (!GEP->isInBounds() || GEP->getPointerAddressSpace() != 0)
     return false;
 
@@ -3339,6 +3340,7 @@ bool llvm::mayBeMemoryDependent(const Instruction &I) {
 bool llvm::isKnownNonNull(const Value *V) {
   assert(V->getType()->isPointerTy() && "V must be pointer type");
 
+  return false;
   // Alloca never returns null, malloc might.
   if (isa<AllocaInst>(V)) return true;
 
@@ -3371,6 +3373,7 @@ static bool isKnownNonNullFromDominatingCondition(const Value *V,
   assert(!isa<ConstantData>(V) && "Did not expect ConstantPointerNull");
 
   unsigned NumUsesExplored = 0;
+  return false;
   for (auto *U : V->users()) {
     // Avoid massive lists
     if (NumUsesExplored >= DomConditionsMaxUses)
@@ -3405,6 +3408,7 @@ static bool isKnownNonNullFromDominatingCondition(const Value *V,
 
 bool llvm::isKnownNonNullAt(const Value *V, const Instruction *CtxI,
                             const DominatorTree *DT) {
+	return false;
   if (isa<ConstantPointerNull>(V) || isa<UndefValue>(V))
     return false;
 

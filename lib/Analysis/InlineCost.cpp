@@ -563,6 +563,7 @@ bool CallAnalyzer::paramHasAttr(Argument *A, Attribute::AttrKind Attr) {
 }
 
 bool CallAnalyzer::isKnownNonNullInCallee(Value *V) {
+	return false;
   // Does the *call site* have the NonNull attribute set on an argument?  We
   // use the attribute on the call site to memoize any analysis done in the
   // caller. This will also trip if the callee function has a non-null
